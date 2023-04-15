@@ -4,5 +4,5 @@
 UTILIZAMOS PYTHON - DJANGO
 -------------------------------
 -------------------------------
-UTILIZAREMOS MYSQL
+UTILIZAREMOS LA BASE DE DATOS: MYSQL
 -------------------------------
