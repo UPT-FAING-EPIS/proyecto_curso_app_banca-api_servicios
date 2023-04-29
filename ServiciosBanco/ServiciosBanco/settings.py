@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'ServicioEducacion',
     'ServicioInternet',
     'api_recibos_agua',
+    'ServicioLuz'
 
 ]
 
