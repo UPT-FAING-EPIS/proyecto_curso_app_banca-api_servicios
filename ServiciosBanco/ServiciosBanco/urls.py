@@ -18,6 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from post.api.router import router_posts
+from post.api.views import ClienteViewSet
+from post.api.views import crear_plan_con_factura,pagar_factura
+from django.contrib import admin
+
+
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -33,6 +39,10 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ServicioTelefonia/', include(router_posts.urls)),
+    path('clientes/<int:pk>/cancelar_servicio/', ClienteViewSet.as_view({'put': 'cancelar_servicio'})),
+    path('planes/crear-con-factura/', crear_plan_con_factura, name='crear_plan_con_factura'),
+    path('ServicioTelefonia/factura/pagar_factura/', pagar_factura, name='pagar_factura'),
     path('ServicioEducacion/', include('ServicioEducacion.urls')),
     path('ServicioLuz/', include('ServicioLuz.urls')),
     path('ServicioInternet/', include('ServicioInternet.urls')),
