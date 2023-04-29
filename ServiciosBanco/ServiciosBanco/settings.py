@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'ServicioEducacion',
     'ServicioInternet',
+    'api_recibos_agua',
 
 ]
 
