@@ -12,7 +12,7 @@ class TbClientes(models.Model):
 
 class TbDeuda(models.Model):
     CodigoDeuda = models.CharField(max_length=255,primary_key=True)
-    CodigoCliente = models.ForeignKey(TbClientes, on_delete=models.CASCADE)
+    FkCodigoCliente = models.ForeignKey(TbClientes, on_delete=models.CASCADE)
     FechaVencimientoPago = models.DateField()
     Monto = models.DecimalField(max_digits=10, decimal_places=2)
     Estado = models.CharField(max_length=255)
