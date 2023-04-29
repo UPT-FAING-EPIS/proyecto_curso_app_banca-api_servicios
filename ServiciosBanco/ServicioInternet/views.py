@@ -1,7 +1,7 @@
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from .models import CuentDeudInter
-from .serializers import DeudInterSerializer
+from .serializers import DeudInterSerializer,DeudInterSerializer2
 from datetime import datetime
 
 class DeudInterListView(viewsets.ModelViewSet):
@@ -11,7 +11,7 @@ class DeudInterListView(viewsets.ModelViewSet):
 
 class DeudInterPagoView(generics.RetrieveUpdateAPIView):
     queryset = CuentDeudInter.objects.all()
-    serializer_class = DeudInterSerializer
+    serializer_class = DeudInterSerializer2
     lookup_field = 'CodigoDeudInter'
     http_method_names = ['get', 'patch']
 
