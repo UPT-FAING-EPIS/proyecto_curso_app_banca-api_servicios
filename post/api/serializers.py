@@ -1,10 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from post.models import Cliente , RegistroLlamadas, Plan, Factura
 
-class PostSerilizer(ModelSerializer):
-    class Meta:
-        model = Cliente
-        fields = ('id', 'nombre', 'telefono', 'cuenta_bancaria')
 
 class ClienteSerializer(ModelSerializer):
     class Meta:

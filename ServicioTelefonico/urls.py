@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 from post.api.router import router_posts
 from post.api.views import ClienteViewSet
-from post.api.views import crear_plan_con_factura
+from post.api.views import crear_plan_con_factura,pagar_factura
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -41,6 +41,7 @@ urlpatterns = [
     path('api/', include(router_posts.urls)),
     path('clientes/<int:pk>/cancelar_servicio/', ClienteViewSet.as_view({'put': 'cancelar_servicio'})),
     path('planes/crear-con-factura/', crear_plan_con_factura, name='crear_plan_con_factura'),
+    path('factura/pagar_factura/', pagar_factura, name='pagar_factura'),
     path(r'docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path(r'redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 

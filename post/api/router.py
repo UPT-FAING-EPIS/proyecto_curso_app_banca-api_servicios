@@ -1,8 +1,8 @@
 from rest_framework.routers import DefaultRouter
-from post.api.views import PostApiViewSet,RegistroLlamadasViewSet ,ClienteViewSet ,PlanViewSet , FacturaViewSet
+from post.api.views import RegistroLlamadasViewSet ,ClienteViewSet ,PlanViewSet , FacturaViewSet
 
 router_posts = DefaultRouter()
-router_posts.register(prefix='post', basename='post', viewset=PostApiViewSet)
+# router_posts.register(prefix='post', basename='post', viewset=PostApiViewSet)
 # router_posts.update(prefix='post', basename='post', viewset=PostApiViewSet)
 router_posts.register('registrollamadas', RegistroLlamadasViewSet)
 router_posts.register('clientes', ClienteViewSet)
