@@ -2,7 +2,7 @@ from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from .models import CuentDeudInter
 from .serializers import DeudInterSerializer
-
+from datetime import datetime
 
 class DeudInterListView(viewsets.ModelViewSet):
     serializer_class = DeudInterSerializer
@@ -17,13 +17,18 @@ class DeudInterPagoView(generics.RetrieveUpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         pago = request.data.get('MonPago')
-
+        boldeuda=False
         if not pago:
             return Response({'error': 'Falta el valor en MonPago'}, status=400)
 
         DeudInter = self.get_object()
 
-        if (float(pago) > DeudInter.MonDeuda) or (float(pago) <0):
+        if datetime.date(datetime.now()) > DeudInter.FechVenc:
+            pago=float(pago)-5.00
+            boldeuda=True
+        
+
+        if (float(pago) >= DeudInter.MonDeuda) or (float(pago) <0):
             return Response({'mensaje': 'El Pago no es el debido'}, status=400)
         
         DeudInter.MonDeuda = float(float(DeudInter.MonDeuda)-float(pago))
@@ -31,6 +36,7 @@ class DeudInterPagoView(generics.RetrieveUpdateAPIView):
         DeudInter.save()
 
         serializer = self.get_serializer(DeudInter)
+        if boldeuda:
+            response_data = {'mensaje': 'Pago Realizado con extra de mora 50', 'data': serializer.data}
         response_data = {'mensaje': 'Pago Realizado', 'data': serializer.data}
-
         return Response(response_data, status=200)

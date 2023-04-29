@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class CuentDeudInter(models.Model):
-    CodigoDeudInter = models.CharField(max_length=255,primary_key=True)
+    CodigoDeudInter = models.IntegerField(auto_created=True ,primary_key=True)
     Nombre = models.CharField(max_length=255)
     Apellido = models.CharField(max_length=255)
     MonDeuda = models.DecimalField(max_digits=10, decimal_places=2)
