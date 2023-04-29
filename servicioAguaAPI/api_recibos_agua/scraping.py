@@ -21,9 +21,9 @@ def obtener_deuda(url, codigo_cliente, correo, dni):
         total_a_pagar_value = total_a_pagar_label.find_next_sibling("th").text.strip()
 
     return total_a_pagar_value
-""" 
-url = "https://pagovisa.epstacna.com.pe:8443"  # URL proporcionada
-codigo_cliente = "11111"  # Reemplaza esto con el código de cliente ingresado a través de la API
+'''
+url = "https://pagovisa.epstacna.com.pe:8443" 
+codigo_cliente = "11111"  
 correo = "apiagua@gmail.com"
 dni = "87654321"
 
@@ -32,4 +32,4 @@ deuda = obtener_deuda(url, codigo_cliente, correo, dni)
 if deuda is not None:
     print(f"Deuda para el cliente {codigo_cliente}: {deuda}")
 else:
-    print("No se encontró información de deuda para el cliente.") """
+    print("No se encontró información de deuda para el cliente.") '''

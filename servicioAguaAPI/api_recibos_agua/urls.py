@@ -6,7 +6,6 @@ from api_recibos_agua import views
 
 
 urlpatterns = [
-    path('deuda/<str:codigo_cliente>/', views.get_deuda, name='get_deuda'),
-    
-   
+    path('deuda/', views.DeudaViews.as_view(), name='get_deuda'),  # Add the DeudaAlumnoViews
+    path('pagos/', views.PagosViews.as_view(), name='pagos_alumno'),  # Add the PagosAlumnoViews
 ]
