@@ -1,30 +1,42 @@
-from rest_framework import generics
+from django.shortcuts import get_object_or_404
+from rest_framework import status
 from rest_framework.response import Response
-from .models import CuentAlumnos
-from .serializers import AlumnosSerializer
+from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView
+from .models import tbDeudasAlumno, tbPagosAlumno
+from .serializers import tbPagosAlumnoSerializer, tbDeudasAlumnoSerializer
 
-class AlumnosListView(generics.ListCreateAPIView):
-    queryset = CuentAlumnos.objects.all()
-    serializer_class = AlumnosSerializer
 
-class AlumnoPagoView(generics.RetrieveUpdateAPIView):
-    queryset = CuentAlumnos.objects.all()
-    serializer_class = AlumnosSerializer
-    lookup_field = 'CodigoAlumno'
+class DeudasAlumnoViews(ListCreateAPIView):
+    queryset = tbDeudasAlumno.objects.all()
+    serializer_class = tbDeudasAlumnoSerializer
+    lookup_field = 'CodigoDeuda'
 
-    def patch(self, request, *args, **kwargs):
+
+class PagosAlumnoViews(ListCreateAPIView):
+    queryset = tbPagosAlumno.objects.all()
+    serializer_class = tbPagosAlumnoSerializer
+
+
+class RealizarPagoView(APIView):
+    def post(self, request):
+        codigo_deuda = request.data.get('CodigoDeuda')
         monto_pago = request.data.get('MontoPago')
-        if not monto_pago:
-            return Response({'error': 'Falta el valor de MontoPago'}, status=400)
-        monto_pago = float(monto_pago)
-        alumno = self.get_object()
-        if monto_pago > alumno.MontoDeuda:
-            return Response({'mensaje': 'El monto es demasiado'}, status=400)
-        elif monto_pago < alumno.MontoDeuda:
-            return Response({'mensaje': 'El monto de pago es insuficiente'}, status=400)
-        alumno.MontoDeuda = 0
-        alumno.MontoPago = 0
-        alumno.save()
-        serializer = self.get_serializer(alumno)
-        response_data = {'mensaje': 'Pago Realizado', 'data': serializer.data}
-        return Response(response_data, status=200)
+        deuda = get_object_or_404(tbDeudasAlumno, CodigoDeuda=codigo_deuda)
+        return self.realizar_pago(deuda, monto_pago)
+
+    def realizar_pago(self, deuda, monto_pago):
+        if deuda.Estado:
+            return Response({'mensaje': 'La deuda ya ha sido pagada.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if monto_pago != deuda.CantidadDeuda:
+            return Response({'mensaje': 'El monto del pago no es igual a la cantidad de la deuda.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = tbPagosAlumnoSerializer(data={'FKCodigoDeuda': deuda.CodigoDeuda, 'MontoPago': monto_pago})
+        if serializer.is_valid():
+            serializer.save()
+            deuda.Estado = True
+            deuda.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

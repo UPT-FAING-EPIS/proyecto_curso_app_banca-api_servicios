@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import AlumnoPagoView,AlumnosListView
-
-
+from .views import RealizarPagoView,DeudasAlumnoViews,PagosAlumnoViews
 
 urlpatterns = [
-    path('', AlumnosListView.as_view(), name='alumno-list'),
-    path('pago/<int:CodigoAlumno>/', AlumnoPagoView.as_view(), name='alumnos-detail')
+    path('deudas/', DeudasAlumnoViews.as_view(), name='deudas'),
+    path('pagos/', PagosAlumnoViews.as_view(), name='pagos'),
+    path('pagar/', RealizarPagoView.as_view(), name='realizar_pago'),
 ]

@@ -1,8 +1,19 @@
 from rest_framework import serializers
-from .models import CuentAlumnos
+from .models import tbAlumno, tbDeudasAlumno, tbPagosAlumno
 
-class AlumnosSerializer(serializers.ModelSerializer):
+class tbAlumnoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CuentAlumnos
-        fields = ('CodigoAlumno', 'Nombre', 'Apellido', 'FechaVencimientoPago', 'MontoDeuda', 'MontoPago', 'Estado')
-        read_only_fields = ('Estado',)
+        model = tbAlumno
+        fields = '__all__'
+
+class tbDeudasAlumnoSerializer(serializers.ModelSerializer):
+    fkCodigoAlumno = serializers.PrimaryKeyRelatedField(queryset=tbAlumno.objects.all())
+    class Meta:
+        model = tbDeudasAlumno
+        fields = '__all__'
+
+class tbPagosAlumnoSerializer(serializers.ModelSerializer):
+    FKCodigoDeuda = serializers.PrimaryKeyRelatedField(queryset=tbDeudasAlumno.objects.all())
+    class Meta:
+        model = tbPagosAlumno
+        fields = '__all__'
