@@ -5,6 +5,7 @@ beautifulsoup4==4.12.2
 certifi==2022.12.7
 cffi==1.15.1
 charset-normalizer==3.1.0
+colorama==0.4.6
 coreapi==2.3.3
 coreschema==0.0.4
 Django==3.2.10
@@ -16,13 +17,16 @@ exceptiongroup==1.1.1
 h11==0.14.0
 idna==3.4
 inflection==0.5.1
+iniconfig==2.0.0
 itypes==1.2.0
 Jinja2==3.1.2
 MarkupSafe==2.1.2
 outcome==1.2.0
 packaging==23.1
+pluggy==1.0.0
 pycparser==2.21
 PySocks==1.7.1
+pytest==7.3.1
 pytz==2023.3
 requests==2.29.0
 ruamel.yaml==0.17.21
