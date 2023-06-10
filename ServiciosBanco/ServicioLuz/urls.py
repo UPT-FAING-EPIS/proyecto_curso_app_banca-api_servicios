@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import PagoListView, DeudaListView
+from .views import DeudaListView, DeudaDetailView, PagoListView, PagoDetailView
 
 urlpatterns = [
-    path('deuda/', DeudaListView.as_view(), name='tb_deuda_list'),
-    path('pago/', PagoListView.as_view(), name='tb_pagos_list')
+    path('deudas/', DeudaListView.as_view(), name='deuda-list'),
+    path('deudas/<int:pk>/', DeudaDetailView.as_view(), name='deuda-detail'),
+    path('pagos/', PagoListView.as_view(), name='pago-list'),
+    path('pagos/<int:pk>/', PagoDetailView.as_view(), name='pago-detail'),
 ]
