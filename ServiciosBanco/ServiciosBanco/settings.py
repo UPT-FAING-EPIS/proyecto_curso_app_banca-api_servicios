@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
-    'ServicioLuz'
+    'ServicioEducacion',
+    'ServicioInternet',
+    'api_recibos_agua',
+    'ServicioLuz',
+    'post',
 
 ]
 
