@@ -7,6 +7,7 @@ from .serializers import tbDeudasAlumnoSerializer, tbPagosAlumnoSerializer
 
 from django.shortcuts import render
 import requests
+from django.views import View
 
 
 class DeudasAlumnoViews(viewsets.ModelViewSet):
@@ -20,11 +21,12 @@ class PagosAlumnoViews(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
 
-def lista_elementos(request):
-    response = requests.get('http://127.0.0.1:8000/ServicioEducacion/deudas/')  # Ejemplo de URL de la API
-    if response.status_code == 200:  # Verifica si la solicitud fue exitosa
-        elementos = response.json()  # Convierte la respuesta JSON en un diccionario o lista Python
-        return render(request, 'deudores.html', {'elementos': elementos})
-    else:
-        # Maneja el error en caso de que la solicitud no sea exitosa
-        return render(request, 'error.html', {'mensaje': 'No se pudo obtener los elementos'})
+class ListaDeudoresView(View):
+    def get(self, request):
+        response = requests.get('http://127.0.0.1:8000/ServicioEducacion/deudas/')  # Ejemplo de URL de la API
+        if response.status_code == 200:  # Verifica si la solicitud fue exitosa
+            elementos = response.json()  # Convierte la respuesta JSON en un diccionario o lista Python
+            return render(request, 'deudores.html', {'elementos': elementos})
+        else:
+            # Maneja el error en caso de que la solicitud no sea exitosa
+            return render(request, 'error.html', {'mensaje': 'No se pudo obtener los elementos'})
