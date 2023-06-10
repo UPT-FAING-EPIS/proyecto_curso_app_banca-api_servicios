@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'ServicioEducacion',
+    'ServicioInternet',
+    'api_recibos_agua',
+    'ServicioLuz',
+    'post',
 
 ]
 

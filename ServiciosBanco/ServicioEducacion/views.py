@@ -1,42 +1,30 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status
+from rest_framework import status, viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListCreateAPIView
 from .models import tbDeudasAlumno, tbPagosAlumno
-from .serializers import tbPagosAlumnoSerializer, tbDeudasAlumnoSerializer
+from .serializers import tbDeudasAlumnoSerializer, tbPagosAlumnoSerializer
+
+from django.shortcuts import render
+import requests
 
 
-class DeudasAlumnoViews(ListCreateAPIView):
+class DeudasAlumnoViews(viewsets.ModelViewSet):
     queryset = tbDeudasAlumno.objects.all()
     serializer_class = tbDeudasAlumnoSerializer
-    lookup_field = 'CodigoDeuda'
+    permission_classes = [permissions.AllowAny]
 
-
-class PagosAlumnoViews(ListCreateAPIView):
+class PagosAlumnoViews(viewsets.ModelViewSet):
     queryset = tbPagosAlumno.objects.all()
     serializer_class = tbPagosAlumnoSerializer
+    permission_classes = [permissions.AllowAny]
 
 
-class RealizarPagoView(APIView):
-    def post(self, request):
-        codigo_deuda = request.data.get('CodigoDeuda')
-        monto_pago = request.data.get('MontoPago')
-        deuda = get_object_or_404(tbDeudasAlumno, CodigoDeuda=codigo_deuda)
-        return self.realizar_pago(deuda, monto_pago)
-
-    def realizar_pago(self, deuda, monto_pago):
-        if deuda.Estado:
-            return Response({'mensaje': 'La deuda ya ha sido pagada.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        if monto_pago != deuda.CantidadDeuda:
-            return Response({'mensaje': 'El monto del pago no es igual a la cantidad de la deuda.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        serializer = tbPagosAlumnoSerializer(data={'FKCodigoDeuda': deuda.CodigoDeuda, 'MontoPago': monto_pago})
-        if serializer.is_valid():
-            serializer.save()
-            deuda.Estado = True
-            deuda.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def lista_elementos(request):
+    response = requests.get('http://127.0.0.1:8000/ServicioEducacion/deudas/')  # Ejemplo de URL de la API
+    if response.status_code == 200:  # Verifica si la solicitud fue exitosa
+        elementos = response.json()  # Convierte la respuesta JSON en un diccionario o lista Python
+        return render(request, 'deudores.html', {'elementos': elementos})
+    else:
+        # Maneja el error en caso de que la solicitud no sea exitosa
+        return render(request, 'error.html', {'mensaje': 'No se pudo obtener los elementos'})

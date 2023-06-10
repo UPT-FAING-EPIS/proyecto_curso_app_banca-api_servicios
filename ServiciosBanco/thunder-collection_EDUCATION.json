@@ -1,0 +1,61 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "EDUCATION",
+    "dateExported": "2023-06-10T15:00:20.843Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "4e2d881c-f9fc-44ad-9bbe-1a835ac98b26",
+            "colId": "e45b045b-3ce5-45a8-88ee-494856aab8b3",
+            "containerId": "",
+            "name": "ListarDeudas",
+            "url": "http://127.0.0.1:8000/ServicioEducacion/deudas/",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-06-10T08:13:58.267Z",
+            "modified": "2023-06-10T11:18:15.314Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f8c487b1-329e-4fd8-9af8-73b14fe2d1d8",
+            "colId": "e45b045b-3ce5-45a8-88ee-494856aab8b3",
+            "containerId": "",
+            "name": "PagarDebito",
+            "url": "http://127.0.0.1:8000/ServicioEducacion/pagarDebito/",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-06-10T08:14:05.022Z",
+            "modified": "2023-06-10T14:22:31.177Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"CodigoDeuda\": \"38\",\n    \"CodigoCuenta\": \"799898156\",\n    \"MontoPago\": 100\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "60701920-5c8f-415c-8260-592514036e24",
+            "colId": "e45b045b-3ce5-45a8-88ee-494856aab8b3",
+            "containerId": "",
+            "name": "PagoNormal",
+            "url": "http://127.0.0.1:8000/ServicioEducacion/pagar/",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-06-10T08:20:50.823Z",
+            "modified": "2023-06-10T11:28:42.431Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"CodigoDeuda\": \"35\",\n    \"MontoPago\": 654.00\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
