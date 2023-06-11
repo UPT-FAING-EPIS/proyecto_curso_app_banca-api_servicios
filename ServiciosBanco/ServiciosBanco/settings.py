@@ -41,9 +41,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'ServicioEducacion',
     'ServicioInternet',
-    'api_recibos_agua',
-    'ServicioLuz',
-    'post',
+    'ServicioLuz'
 
 ]
 
@@ -87,7 +85,7 @@ DATABASES = {
         'HOST':'localhost',
         'PORT':'3306',
         'USER':'root',
-        'PASSWORD':'admin',
+        'PASSWORD':'',
         'NAME':'serviciosbanco',
         'OPTIONS':{
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"

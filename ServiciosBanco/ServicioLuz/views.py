@@ -1,9 +1,10 @@
 import json
 from rest_framework import generics
 from rest_framework.response import Response
-from .models import TbPagos
-from .models import TbDeuda
-from .serializers import DeudaSerializer, PagosSerializer
+from .models import TbDeuda,TbPagos
+from .serializers import DeudaSerializer,PagosSerializer
+from rest_framework.generics import RetrieveAPIView, UpdateAPIView, DestroyAPIView
+from Patrones.factory import DeudInterPagoFactory
 from datetime import datetime
 
 class DeudaDTO:
@@ -114,18 +115,18 @@ class DeudaListView(generics.ListCreateAPIView):
 class PagoListView(generics.ListCreateAPIView):
     queryset = TbPagos.objects.all()
     serializer_class = PagosSerializer
-    
+
     def post(self, request, *args, **kwargs):
         codigo_deuda = request.data.get('CodigoDeuda', None)
-        codigo_pago = request.data.get('CodigoPago', None)  # Obtener el valor de CodigoPago
+        codigo_pago = request.data.get('CodigoPago', None)
 
         if codigo_deuda is None:
             return Response({'error': 'El campo CodigoDeuda es requerido.'}, status=400)
-        
+
         deuda = TbDeuda.objects.filter(CodigoDeuda=codigo_deuda).first()
         if deuda is None:
             return Response({'error': f'La deuda con CodigoDeuda={codigo_deuda} no existe.'}, status=400)
-        
+
         monto_pago = float(request.data.get('Pago', 0))
         fecha_pago_str = request.data.get('FechaPago', datetime.now())
         fecha_pago = datetime.strptime(fecha_pago_str, '%Y-%m-%d').date()
@@ -138,11 +139,15 @@ class PagoListView(generics.ListCreateAPIView):
         if monto_pago != deuda.Monto:
             return Response({'error': 'El monto de pago no coincide con la deuda. Se interrumpe la operación.'}, status=400)
 
-        pago = TbPagos(CodigoPago=codigo_pago, CodigoDeuda=deuda, Pago=monto_pago, FechaPago=fecha_pago)  # Asignar el valor de CodigoPago
+        pago = TbPagos(CodigoPago=codigo_pago, CodigoDeuda=deuda, Pago=monto_pago, FechaPago=fecha_pago)
         pago.save()
         deuda.Estado = 'pagado'
         deuda.save()
 
+        command = DeudInterPagoFactory.create("ServicioLuz", pago.Pago)
+
+        result = command.pagar(deuda)
+
         serializer = self.get_serializer(pago)
-        response_data = {'mensaje': 'Pago Realizado', 'data': serializer.data}
-        return Response(response_data, status=200)
+        response_data = {'mensaje': result['mensaje'], 'data': serializer.data}
+        return Response(response_data, status=result['status'])
