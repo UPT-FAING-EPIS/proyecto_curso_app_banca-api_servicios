@@ -43,14 +43,7 @@ class ServicioInternet(IServicio):
         else:
             return {'mensaje': 'Pago Realizado Total', 'status': 200}
             
-        
-            
 
-        
-        
-        
-        
-    
 class ServicioEducacion(IServicio):
     def __init__(self, pago):
         _pago=pago
