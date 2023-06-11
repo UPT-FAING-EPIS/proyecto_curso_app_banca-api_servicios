@@ -13,21 +13,21 @@ class IServicio:
         pass
         
 class ServicioInternet(IServicio):
-    def __init__(pago):
-        _pago=pago
+    def __init__(self, pago):
+        self._pago=pago
         
     def pagar(self, deud_inter):
         observerPago = PatterObserverPagos()
-        RabbitObserver = RabbitObserver()
+        Rabbitobserver = RabbitObserver()
 
-        observerPago.attach_observer(RabbitObserver)
+        observerPago.attach_observer(Rabbitobserver)
         
         strategy = DiscountPaymentStrategy()
         
-        if datetime.date.today() > deud_inter.FechaVencimiento:
+        if datetime.date.today() > deud_inter.FechVenc:
             strategy = InterestPaymentStrategy()
 
-        deud_inter_pago = strategy.calculate_payment(deud_inter.MonDeuda,deud_inter.FechaVencimiento )
+        deud_inter_pago = strategy.calculate_payment(deud_inter.MonDeuda,deud_inter.FechVenc )
 
         deud_inter.MonDeuda = Decimal(deud_inter_pago) - Decimal(self._pago)
         
@@ -38,7 +38,7 @@ class ServicioInternet(IServicio):
 
         deud_inter.save()
         
-        if datetime.date.today() > deud_inter.FechaVencimiento:
+        if datetime.date.today() > deud_inter.FechVenc:
             return {'mensaje': f'Pago Realizado, con Interes de 20% siendo un total de: {deud_inter_pago}', 'status': 200}
         else:
             return {'mensaje': 'Pago Realizado Total', 'status': 200}
@@ -52,7 +52,7 @@ class ServicioInternet(IServicio):
         
     
 class ServicioEducacion(IServicio):
-    def __init__(pago):
+    def __init__(self, pago):
         _pago=pago
     def pagar(self, deuda, cuenta):
         if deuda.Estado:

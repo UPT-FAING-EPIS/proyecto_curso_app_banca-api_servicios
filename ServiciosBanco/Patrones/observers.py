@@ -17,7 +17,7 @@ class PatterObserverPagos:
 
     def notify_observers(self,message,rootingkey):
         for observer in self._observers:
-            observer.update(message)
+            observer.update(message,rootingkey)
 
 class Observer:
     def update(self,message,rootingkey):
