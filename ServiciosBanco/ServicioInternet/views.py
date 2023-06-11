@@ -4,13 +4,13 @@ from .models import CuentDeudInter
 from .serializers import DeudInterSerializer, DeudInterSerializer2
 from datetime import datetime
 from decimal import Decimal
-from ..ServiciosBanco.factory import DeudInterPagoFactory
+from Patrones.factory import DeudInterPagoFactory
+
 
 
 class DeudInterListView(viewsets.ModelViewSet):
     serializer_class = DeudInterSerializer
     queryset = CuentDeudInter.objects.all()
-
 
 
 class DeudInterPagoView(generics.RetrieveUpdateAPIView):
@@ -22,13 +22,15 @@ class DeudInterPagoView(generics.RetrieveUpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         pago = Decimal(request.data.get('MonPago'))
+
         if not pago:
             return Response({'error': 'Falta el valor en Monto Pago'}, status=400)
-        
-        factoria= DeudInterPagoFactory.create("ServicioInternet",pago)
+
         deud_inter = self.get_object()
-        result = factoria.pagar()
- 
+        command = DeudInterPagoFactory.create("ServicioInternet",pago)
+        result = command.pagar(deud_inter)
+
+
         if result['status'] == 200:
             serializer = self.get_serializer(deud_inter)
             response_data = {

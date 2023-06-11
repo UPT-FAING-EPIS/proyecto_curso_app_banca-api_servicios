@@ -16,4 +16,4 @@ class InterestPaymentStrategy(PaymentStrategy):
         if datetime.date.today() > due_date:
             return amount * Decimal('1.2')  # Aplicar un incremento del 20% como interés
         else:
-            return amount
+            return amount 

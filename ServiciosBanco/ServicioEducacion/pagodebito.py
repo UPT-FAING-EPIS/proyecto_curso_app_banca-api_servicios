@@ -2,7 +2,8 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from .models import tbCuenta, tbDeudasAlumno
-from ..ServiciosBanco.factory import DeudInterPagoFactory
+from Patrones.factory import DeudInterPagoFactory
+
 
 class PagoDebitoViews(APIView):
     def post(self, request):

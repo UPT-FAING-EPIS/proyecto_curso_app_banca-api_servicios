@@ -2,9 +2,10 @@ import datetime
 from decimal import Decimal
 from rest_framework import status
 from rest_framework.response import Response
-from money import Money
-from observers import PatterObserverPagos, RabbitObserver
-from Strategy import DiscountPaymentStrategy, InterestPaymentStrategy
+from Patrones.money import Money
+
+from Patrones.observers import PatterObserverPagos, RabbitObserver
+from Patrones.Strategy import DiscountPaymentStrategy, InterestPaymentStrategy
 
 
 class IServicio:
@@ -95,7 +96,6 @@ class ServicioEducacion(IServicio):
     
     
 class DeudInterPagoFactory:
-    @staticmethod
     def create(nameservicio,pagar):
         if (nameservicio=="ServicioInternet"):
             return ServicioInternet(pagar)

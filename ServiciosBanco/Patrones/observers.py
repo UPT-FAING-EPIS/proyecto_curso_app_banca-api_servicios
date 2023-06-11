@@ -1,4 +1,4 @@
-from rabbitmq import RabbitMq
+from Patrones.rabbitmq import RabbitMq
 
 class PatterObserverPagos:
     _instance = None
