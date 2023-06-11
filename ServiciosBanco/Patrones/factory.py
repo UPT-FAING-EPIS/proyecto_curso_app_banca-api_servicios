@@ -85,18 +85,50 @@ class ServicioEducacion(IServicio):
         observerPagos.notify_observers('Pago realizado exitosamente. Monto final: {}'.format(monto_pago_final),"ServicioEducacion")
         return Response({'mensaje': 'Pago realizado exitosamente. Monto final: {}'.format(monto_pago_final)}, status=status.HTTP_200_OK)
 
-        
+
+class ServicioLuz(IServicio):
+    def __init__(self, pago):
+        self._pago = Decimal(pago)  # Convertir el pago a Decimal
+
+    def pagar(self, deud_luz):
+        observerPago = PatterObserverPagos()
+        rabbit_observer = RabbitObserver()
+
+        observerPago.attach_observer(rabbit_observer)
+
+        strategy = DiscountPaymentStrategy()
+
+        if datetime.date.today() > deud_luz.FechaVencimientoPago:
+            strategy = InterestPaymentStrategy()
+
+        deud_luz_pago = strategy.calculate_payment(deud_luz.Monto, deud_luz.FechaVencimientoPago)
+
+        deud_luz.Monto = Decimal(deud_luz_pago) - self._pago  # Utilizar self._pago directamente
+
+        if deud_luz.Monto != 0:
+            return {'mensaje': 'El pago no es el debido', 'status': 400}
+
+        observerPago.notify_observers("Pago Realizado", "ServicioLuz")
+
+        deud_luz.save()
+
+        if datetime.date.today() > deud_luz.FechaVencimientoPago:
+            return {'mensaje': f'Pago Realizado, con interés de 20% siendo un total de: {deud_luz_pago}',
+                    'status': 200}
+        else:
+            return {'mensaje': 'Pago Realizado Total', 'status': 200}        
     
     
 class DeudInterPagoFactory:
     def create(nameservicio,pagar):
         if (nameservicio=="ServicioInternet"):
             return ServicioInternet(pagar)
-    
+
         if (nameservicio=="ServicioEducacion"):
             return ServicioEducacion(pagar)
             
-        
+        if (nameservicio == "ServicioLuz"):
+            return ServicioLuz(pagar)
         
         
             

@@ -144,7 +144,8 @@ class PagoListView(generics.ListCreateAPIView):
         deuda.Estado = 'pagado'
         deuda.save()
 
-        command = DeudInterPagoFactory.create("ServicioLuz", pago)
+        command = DeudInterPagoFactory.create("ServicioLuz", pago.Pago)
+
         result = command.pagar(deuda)
 
         serializer = self.get_serializer(pago)
