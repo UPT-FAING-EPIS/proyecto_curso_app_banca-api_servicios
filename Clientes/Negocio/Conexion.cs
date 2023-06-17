@@ -6,10 +6,10 @@ namespace Clientes.Negocio
     {
         private readonly string connectionString;
 
-        string server = "localhost";
+        string server = "helbert.info";
         string database = "clientesbanca";
-        string username = "root";
-        string password = "";
+        string username = "ClienteDb";
+        string password = "DbCliente";
 
 
 
