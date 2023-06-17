@@ -29,7 +29,7 @@ namespace Clientes.Controllers
             List<Cliente> clientes = new List<Cliente>();
             
 
-            using (var command = new MySqlCommand("SELECT * FROM Clientes", connection))
+            using (var command = new MySqlCommand("SELECT * FROM clientes", connection))
             {
                 connection.Open();
 
@@ -65,7 +65,7 @@ namespace Clientes.Controllers
         {
             try
             {
-                using (var command = new MySqlCommand("INSERT INTO Clientes (NombreCliente, Direccion, Pais, CodigoPostal, NumeroTelefono, CorreoElectronico, EstadoCuenta) VALUES (@NombreCliente, @Direccion, @Pais, @CodigoPostal, @NumeroTelefono, @CorreoElectronico, @EstadoCuenta)", connection))
+                using (var command = new MySqlCommand("INSERT INTO clientes (NombreCliente, Direccion, Pais, CodigoPostal, NumeroTelefono, CorreoElectronico, EstadoCuenta) VALUES (@NombreCliente, @Direccion, @Pais, @CodigoPostal, @NumeroTelefono, @CorreoElectronico, @EstadoCuenta)", connection))
                 {
                     command.Parameters.AddWithValue("@NombreCliente", cliente.NombreCliente);
                     command.Parameters.AddWithValue("@Direccion", cliente.Direccion);
@@ -95,7 +95,7 @@ namespace Clientes.Controllers
         {
             try
             {
-                using (var command = new MySqlCommand("UPDATE Clientes SET NombreCliente = @NombreCliente, Direccion = @Direccion, Pais = @Pais, CodigoPostal = @CodigoPostal, NumeroTelefono = @NumeroTelefono, CorreoElectronico = @CorreoElectronico, EstadoCuenta = @EstadoCuenta WHERE IdCliente = @IdCliente", connection))
+                using (var command = new MySqlCommand("UPDATE clientes SET NombreCliente = @NombreCliente, Direccion = @Direccion, Pais = @Pais, CodigoPostal = @CodigoPostal, NumeroTelefono = @NumeroTelefono, CorreoElectronico = @CorreoElectronico, EstadoCuenta = @EstadoCuenta WHERE IdCliente = @IdCliente", connection))
                 {
                     command.Parameters.AddWithValue("@NombreCliente", cliente.NombreCliente);
                     command.Parameters.AddWithValue("@Direccion", cliente.Direccion);
