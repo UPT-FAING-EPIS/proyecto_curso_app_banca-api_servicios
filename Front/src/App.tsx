@@ -14,6 +14,7 @@ function App() {
           <Route path="/" element={<Navigate to="/Servicios" />} />
           <Route path="/Servicios" element={<MainServicesPages />} />
           <Route path="/Servicios/Educacion" element={<EducationPages />} />
+          <Route path="/Servicios/Luz" element={<EducationPages />} />
           <Route path="/Servicios/Educacion/Pagos" element={<PagarDeudas />} />
         </Routes>
         <Toaster />
