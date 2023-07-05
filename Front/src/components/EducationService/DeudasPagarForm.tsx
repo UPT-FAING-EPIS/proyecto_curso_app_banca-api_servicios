@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { pagarDeuda } from "../../api/education.api.ts";
 import { Deuda } from "../../Types/educationservice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import axios, {AxiosError} from "axios";
 
 export function DeudasPagarForm() {
   const {
@@ -11,21 +13,38 @@ export function DeudasPagarForm() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onSubmit = handleSubmit(async (data) => {
-    const deudaData: Deuda = {
-      CodigoDeuda: parseInt(data.CodigoDeuda),
-      MontoPago: parseInt(data.MontoPago),
-    };
-    const res = await pagarDeuda(deudaData);
-    console.log(res);
-    toast.success("Pago realizado correctamente", {
-      position: "top-right",
-      style: {
+    try {
+      const deudaData: Deuda = {
+        CodigoDeuda: parseInt(data.CodigoDeuda),
+        MontoPago: parseInt(data.MontoPago),
+      };
+      const res = await pagarDeuda(deudaData);
+      console.log(res);
+
+      const style = {
         background: "#202033",
         color: "#fff",
-      },
-    });
-    navigate("/Servicios/Educacion");
+      };
+
+      toast.success("Pago realizado correctamente", {
+        position: "top-right",
+        style,
+      });
+      navigate("/Servicios/Educacion");
+    } catch (error) {
+      console.log(error);
+
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        setErrorMessage("No se ha encontrado el ID del usuario");
+      } else if (axios.isAxiosError(error) && error.response?.status === 400) {
+        setErrorMessage(error.response.data.mensaje);
+      } else {
+        setErrorMessage((error as Error).message);
+      }
+    }
   });
 
   return (
@@ -53,8 +72,10 @@ export function DeudasPagarForm() {
           className="p-2 rounded border border-gray-300"
         />
         {errors.MontoPago && (
-          <span className="text-red-500">Monto de pago requerido</span>
+          <span className="text-red-500">Monto de pago requerido </span>
         )}
+
+        {errorMessage && <span className="text-red-500">{errorMessage}</span>}
 
         <div className="flex gap-4">
           <Link
