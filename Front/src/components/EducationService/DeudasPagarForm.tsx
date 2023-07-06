@@ -4,7 +4,7 @@ import { pagarDeuda } from "../../api/education.api.ts";
 import { Deuda } from "../../Types/educationservice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import axios, {AxiosError} from "axios";
+import axios from "axios";
 
 export function DeudasPagarForm() {
   const {
