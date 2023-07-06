@@ -1,4 +1,4 @@
-import {ServiceCard} from "../components/ServiceCard";
+import { ServiceCard } from "../components/ServiceCard";
 
 export function MainServicesPages() {
   return (
@@ -9,7 +9,7 @@ export function MainServicesPages() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         <ServiceCard
           icon="BsBook"
-          iconColor="text-orange-300" 
+          iconColor="text-orange-300"
           route="/Servicios/Educacion"
           title="Pago de Educación"
         />
@@ -21,7 +21,7 @@ export function MainServicesPages() {
         />
         <ServiceCard
           icon="BsLightning"
-          iconColor="text-yellow-400" 
+          iconColor="text-yellow-400"
           route="/Servicios/Luz"
           title="Pago de Luz"
         />
@@ -33,7 +33,7 @@ export function MainServicesPages() {
         />
         <ServiceCard
           icon="BsPhone"
-          iconColor="text-gray-400" 
+          iconColor="text-gray-400"
           route="/Servicios/Telefonia"
           title="Pago de Telefonía"
         />

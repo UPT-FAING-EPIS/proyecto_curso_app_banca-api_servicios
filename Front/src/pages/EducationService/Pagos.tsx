@@ -1,9 +1,13 @@
 import { PagosList } from "../../components/EducationService/PagosList";
+import { Regresar } from "../../components/Regresar";
 
 export function Pagos() {
   return (
-    <div className="flex flex-col gap-4">
-      <PagosList />
-    </div>
+    <>
+      <Regresar to="/Servicios/Educacion" />
+      <div className="flex flex-col gap-4">
+        <PagosList />
+      </div>
+    </>
   );
 }
