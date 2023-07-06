@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MainServicesPages } from "./pages/MainServicesPages";
-import { EducationPages } from "./pages/EducationService/EducationPages";
-import { PagarDeudas } from "./pages/EducationService/PagarDeudas";
 import { Navigation } from "./components/Navigation";
 import { Toaster } from "react-hot-toast";
+import { EducacionRoutes } from "./routes/EducacionRoutes";
 
 function App() {
   return (
@@ -13,9 +12,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/Servicios" />} />
           <Route path="/Servicios" element={<MainServicesPages />} />
-          <Route path="/Servicios/Educacion" element={<EducationPages />} />
-          <Route path="/Servicios/Luz" element={<EducationPages />} />
-          <Route path="/Servicios/Educacion/Pagos" element={<PagarDeudas />} />
+          <Route path="/Servicios/Educacion/*" element={<EducacionRoutes />} />
+          <Route path="/Servicios/Luz" element={< MainServicesPages/>} />
         </Routes>
         <Toaster />
       </div>
