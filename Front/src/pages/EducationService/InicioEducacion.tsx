@@ -1,4 +1,4 @@
-import { OpcionesInicio } from "../../components/EducationService/OpcionesInicio";
+import { OpcionesInicio } from "../../components/OpcionesInicio";
 import { Regresar } from "../../components/Regresar";
 
 export function InicioEducation() {

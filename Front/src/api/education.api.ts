@@ -9,8 +9,8 @@ export const pagarDeuda = (pago: Deuda) => {
   return axios.post("http://127.0.0.1:8000/ServicioEducacion/pagar/", pago);
 };
 
-export const buscarDeuda = (id: number) => {
-  return axios.post(`http://127.0.0.1:8000/ServicioEducacion/listardeudores/${id}/`, id);
+export const buscarDeuda = (cod: number) => {
+  return axios.get(`http://127.0.0.1:8000/ServicioEducacion/listardeudores/${cod}/`);
 };
 export const obtenerPagos = () => {
   return axios.get("http://127.0.0.1:8000/ServicioEducacion/pagos/");

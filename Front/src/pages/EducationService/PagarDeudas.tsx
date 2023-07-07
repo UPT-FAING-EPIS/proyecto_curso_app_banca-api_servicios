@@ -1,5 +1,4 @@
-import { CardOptions } from "../../components/EducationService/CardOptions";
-import { DeudasPagarForm } from "../../components/EducationService/DeudasPagarForm";
+import { CardOptions } from "../../components/CardOptions";
 import { Regresar } from "../../components/Regresar";
 
 export function PagarDeudas() {
