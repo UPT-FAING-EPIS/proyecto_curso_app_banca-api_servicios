@@ -4,7 +4,7 @@ import { DeudasPagarForm } from "../../components/EducationService/DeudasPagarFo
 export function BusquedaPago() {
   return (
     <div className="mt-4">
-      <BusquedaForm />
+      <BusquedaForm placeholder="Ingrese el codigo del estudiante" />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-4">Formulario de Pago</h1>
         <div className="max-w-md mx-auto">

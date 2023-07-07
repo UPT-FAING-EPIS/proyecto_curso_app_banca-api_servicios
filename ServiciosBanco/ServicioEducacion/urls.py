@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import DeudasAlumnoViews, ListaDeudoresView, PagosAlumnoViews
+from .views import DeudasAlumnoViews, BuscarDeudores, PagosAlumnoViews
 from .pagardecorator import RealizarPagoViews
 from .pagodebito import PagoDebitoViews
 
@@ -14,12 +14,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('pagar/', RealizarPagoViews.as_view(), name='realizar_pago'),
     path('pagarDebito/', PagoDebitoViews.as_view(), name='realizar_pago2'),
-    path('listardeudores/', ListaDeudoresView.as_view(), name='lista_elementos'),
+    path('listardeudores/<str:fk_codigo_alumno>/', BuscarDeudores.as_view(), name='listar_deudores'),
 ]
-
-
-# [
-#     path('deudas/', DeudasAlumnoViews.as_view(), name='deudas'),
-#     path('pagos/', PagosAlumnoViews.as_view(), name='pagos'),
-#     path('pagar/', RealizarPagoView.as_view(), name='realizar_pago'),
-# ]
