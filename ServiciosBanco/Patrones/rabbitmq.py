@@ -4,7 +4,6 @@ import json
 
 rabbitmq_host = "amqps://enozynwv:2TtZL4ta8m_64qXMTbYs2SjVjRbPL8av@cow.rmq2.cloudamqp.com/enozynwv"
 params = pika.URLParameters(rabbitmq_host)
-connection = pika.BlockingConnection(params)
 
 
 class RabbitMq():
@@ -21,11 +20,12 @@ class RabbitMq():
             "Level": routing_key,
             "Message": json.dumps(message)
         }
+        connection = pika.BlockingConnection(params)
+
         
         channel = connection.channel()
-        channel.queue_delete(queue="hello")  # Delete the existing queue
-        
-        channel.queue_declare(queue="hello", durable=False)  # Recreate the queue with durable=False
+        channel.queue_delete(queue="hello") 
+        channel.queue_declare(queue="hello", durable=True)  # Recreate the queue with durable=False
         
         channel.basic_publish(
             exchange='',
