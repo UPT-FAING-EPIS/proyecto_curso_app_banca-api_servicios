@@ -1,4 +1,6 @@
 from rest_framework.exceptions import NotFound
+from django.db import connections
+
 from rest_framework import status, viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -63,3 +65,17 @@ class BuscarDeudores(APIView):
 
     def perform_create(self, serializer):
         serializer.save()
+
+class HealthCheckView(APIView):
+    def get(self, request):
+        # Verificar el estado de la base de datos en cada aplicación
+        db_status = {}
+        for db_name in connections:
+            connection = connections[db_name]
+            try:
+                connection.ensure_connection()
+                db_status[db_name] = 'ok'
+            except Exception as e:
+                db_status[db_name] = 'error'
+        
+        return Response({'status': 'ok', 'database': db_status})
