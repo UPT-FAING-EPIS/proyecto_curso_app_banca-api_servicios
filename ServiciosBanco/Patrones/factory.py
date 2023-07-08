@@ -46,7 +46,7 @@ class ServicioInternet(IServicio):
 
 class ServicioEducacion(IServicio):
     def __init__(self, pago):
-        _pago=pago
+        self._pago = pago
     def pagar(self, deuda, cuenta):
         if deuda.Estado:
             return Response({'mensaje': 'La deuda ya ha sido pagada.'}, status=status.HTTP_400_BAD_REQUEST)

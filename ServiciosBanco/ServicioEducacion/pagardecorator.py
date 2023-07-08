@@ -87,9 +87,12 @@ class RealizarPagoViews(APIView):
     def post(self, request):
         codigo_deuda = request.data.get('CodigoDeuda')
         monto_pago = request.data.get('MontoPago')
-        deuda = get_object_or_404(tbDeudasAlumno, CodigoDeuda=codigo_deuda)
+        deuda = get_object_or_404(tbDeudasAlumno.objects.using('BaseDatosEducacion'), CodigoDeuda=codigo_deuda)
         return self.realizar_pago(deuda, monto_pago)
 
+    def perform_create(self, serializer):
+        serializer.save()
+        
     def realizar_pago(self, deuda, monto_pago):
         if deuda.Estado:
             return Response({'mensaje': 'La deuda ya ha sido pagada.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -98,14 +101,14 @@ class RealizarPagoViews(APIView):
             return Response({'mensaje': 'El monto del pago no es igual a la cantidad de la deuda.'}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = tbPagosAlumnoSerializer(data={
-                                                    'FKCodigoDeuda': deuda.CodigoDeuda, 
-                                                    'MontoPago': monto_pago
-                                                   })
+            'FKCodigoDeuda': deuda.CodigoDeuda, 
+            'MontoPago': monto_pago
+        })
+
         if serializer.is_valid():
             serializer.save()
             deuda.Estado = True
             deuda.save()
-            serializer.save()
             component = ConcreteComponent(serializer.instance)
             receipt_decorator = PdfReceiptDecorator(component)
             response_data = {'mensaje': component.operation(), 'recibo': receipt_decorator.operation()}
