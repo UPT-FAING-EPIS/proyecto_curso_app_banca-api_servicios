@@ -4,7 +4,7 @@ import json
 
 rabbitmq_host = "amqps://enozynwv:2TtZL4ta8m_64qXMTbYs2SjVjRbPL8av@cow.rmq2.cloudamqp.com/enozynwv"
 params = pika.URLParameters(rabbitmq_host)
-connection = pika.BlockingConnection(params)
+
 
 
 class RabbitMq():
@@ -21,7 +21,7 @@ class RabbitMq():
             "Level": routing_key,
             "Message": json.dumps(message)
         }
-        
+        connection = pika.BlockingConnection(params)
         channel = connection.channel()
         channel.queue_declare(queue="logsPago")
         channel.basic_publish(
