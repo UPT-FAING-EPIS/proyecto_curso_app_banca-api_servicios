@@ -2,10 +2,10 @@ import pika
 import datetime
 import json
 
-rabbitmq_host = "161.132.37.55"
-rabbitmq_port = "5672"
-rabbitmq_username = "guest"
-rabbitmq_password = "guest"
+rabbitmq_host = "amqps://enozynwv:2TtZL4ta8m_64qXMTbYs2SjVjRbPL8av@cow.rmq2.cloudamqp.com/enozynwv"
+params = pika.URLParameters(rabbitmq_host)
+connection = pika.BlockingConnection(params)
+
 
 class RabbitMq():
     _instance = None
@@ -21,18 +21,16 @@ class RabbitMq():
             "Level": routing_key,
             "Message": json.dumps(message)
         }
-        credentials = pika.PlainCredentials(rabbitmq_username, rabbitmq_password)
-        connection = pika.BlockingConnection(
-            pika.ConnectionParameters(
-                host=rabbitmq_host,
-                port=rabbitmq_port,
-                credentials=credentials
-            )
-        )
+        
         channel = connection.channel()
-        channel.queue_declare(queue="logsPago", passive=True)
+        channel.queue_delete(queue="hello")  # Delete the existing queue
+        
+        channel.queue_declare(queue="hello", durable=False)  # Recreate the queue with durable=False
+        
         channel.basic_publish(
-            exchange='', routing_key="logsPago", body=json.dumps(log)
+            exchange='',
+            routing_key="logsPago",
+            body=json.dumps(log)
         )
         connection.close()
 

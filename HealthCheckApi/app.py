@@ -1,8 +1,8 @@
 from health_check_api import HealthCheckAPI
 from message_notifier import HealthCheckNotifier
 
-account_sid = 'ACaf500a7a074c32f57082830dce40f29b'
-auth_token = 'c85bfe34763b714a3c2101db4ca9a5cb'
+account_sid = 'MYACCOUNT'
+auth_token = 'MYTOKEN'
 from_number = '+14179628485'
 to_number = '+51981145791'
 
