@@ -84,12 +84,12 @@ WSGI_APPLICATION = 'ServiciosBanco.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST':'localhost',
-        'PORT':'3306',
-        'USER':'root',
-        'PASSWORD':'',
-        'NAME':'serviciosbanco',
-        'OPTIONS':{
+        'HOST': 'helbert.info',
+        'PORT': '3306',
+        'USER': 'APIservicios',
+        'PASSWORD': 'serviciosAPI',
+        'NAME': 'serviciosbanco',
+        'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     },
@@ -194,4 +194,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGIN = ["http://localhost:5173"]
-CORS_ALLOW_ALL_ORIGINS =True
+CORS_ALLOW_ALL_ORIGINS = True

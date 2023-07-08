@@ -25,6 +25,7 @@ class Observer:
 
 class RabbitObserver(Observer):
     def update(self,message,rootingkey):
-        RabbitMq.rabbitmqMessage(message,rootingkey)
+        pass
+        #RabbitMq.rabbitmqMessage(message,rootingkey)
         
 
