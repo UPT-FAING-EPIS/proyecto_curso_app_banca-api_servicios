@@ -37,6 +37,13 @@ export function MainServicesPages() {
           route="/Servicios/Telefonia"
           title="Pago de Telefonía"
         />
+        <ServiceCard
+          icon="BsPhone"
+          iconColor="text-gray-400"
+          route="/Cliente"
+          title="Clientes"
+        />
+        
       </div>
     </div>
   );
