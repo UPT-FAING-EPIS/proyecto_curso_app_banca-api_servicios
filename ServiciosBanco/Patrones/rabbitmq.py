@@ -4,8 +4,8 @@ import json
 
 rabbitmq_host = "161.132.37.55"
 rabbitmq_port = "5672"
-rabbitmq_username = "andre"
-rabbitmq_password = "123"
+rabbitmq_username = "guest"
+rabbitmq_password = "guest"
 
 class RabbitMq():
     _instance = None

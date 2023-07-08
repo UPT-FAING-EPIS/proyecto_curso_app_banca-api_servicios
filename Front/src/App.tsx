@@ -3,6 +3,8 @@ import { MainServicesPages } from "./pages/MainServicesPages";
 import { Navigation } from "./components/Navigation";
 import { Toaster } from "react-hot-toast";
 import { EducacionRoutes } from "./routes/EducacionRoutes";
+import { InternetRoutes } from "./routes/InternetRoutes";
+
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/Servicios" element={<MainServicesPages />} />
           <Route path="/Servicios/Educacion/*" element={<EducacionRoutes />} />
           <Route path="/Servicios/Luz" element={< MainServicesPages/>} />
+          <Route path="/Servicios/Internet/*" element={< InternetRoutes/>} />
+
         </Routes>
         <Toaster />
       </div>

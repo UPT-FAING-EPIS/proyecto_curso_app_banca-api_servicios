@@ -35,6 +35,7 @@ class ServicioInternet(IServicio):
             return {'mensaje': 'El Pago no es el debido', 'status': 400}
 
         observerPago.notify_observers("Pago Realizado","ServicioInternet")
+        deud_inter.Estado = 1
 
         deud_inter.save()
         
